@@ -1,0 +1,39 @@
+[
+    {
+        "Id": 1,
+        "Nome": "Pet Haus",
+        "Fone": "(51) 8500-0660",
+        "Local": "Av: Dom Jão Becker 582, Centro-São Leopoldo",
+        "Email": "pethaus@hotmail.com.br",
+        "Latitude": -29.760641,
+        "Longitude": -51.14751589999997
+    },
+    {
+        "Id": 2,
+        "Nome": "Ro-le Boutik Dog",
+        "Fone": "(51) 3239-8490",
+        "Local": "Rua: Itaboraí 1139, Jardim Botânico-Porto Alegre",
+        "Email": "",
+        "Latitude": -30.053081,
+        "Longitude": -51.182856
+    },
+    {
+        "Id": 3,
+        "Nome": "Mimos Pet Shop",
+        "Fone": "(51) 3248-8322",
+        "Local": "Av: Icaraí 1094, Cristal-Porto Alegre",
+        "Email": "",
+        "Latitude": -30.088885,
+        "Longitude": -51.241441
+    },
+    {
+        "Id": 4,
+        "Nome": "JBM Pet",
+        "Fone": "(51) 3019.6010",
+        "Local": "Av: Guido Mondim 1157, São Geraldo-Porto Alegre",
+        "Email": "",
+        "Latitude": -30.011896,
+        "Longitude": -51.194390
+    }
+
+]

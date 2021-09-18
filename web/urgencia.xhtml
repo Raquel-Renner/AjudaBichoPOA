@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"      
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"      
+      >
+
+    <ui:composition template="templateDefault.xhtml">
+        <h:head>
+            <title>AjudaBichoPOA</title>
+            <link rel="shortcut icon" href="resources/images/Logo/icone.ico"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+            <link rel="stylesheet" href="resources/css/bootstrap/agency.css"/> 
+            <h:outputStylesheet name="./css/bootstrap/agency.css"/>
+            <h:outputStylesheet name="./css/bootstrap/bootstrap.min_Dois.css"/>
+            <!--<h:outputStylesheet name="./css/bootstrap/bootstrap.min.css"/>-->
+            <h:outputStylesheet name="./css/bootstrap/font-awesome/css/font-awesome.min.css"/> 
+
+            <link href="./css/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+            <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+            <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'/>
+            <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'/>
+            <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'/>
+        </h:head>
+
+        <ui:define name="content">
+            <!--div container do Header-->
+            <div class="container">
+                <!-- Jumbotron Header -->
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <header class="jumbotron text-center" style="background-size: cover;">
+                    <h1 style="color: white">Urgências</h1>
+                    <b style="color: white">Você poderá ajudar a resolver casos de urgencia animal, ou divulgar algum.</b><br/>
+                    <b style="color: white">As publicações possuem status referentes, indicando qual a situaçao atual do animal.</b><br/>
+                    <br/>                 
+                    <br/>
+                    <div class="list-inline text-center">
+                        <h:commandButton class="btn btn-primary btn-large text-muted" type="button"
+                                         rendered="#{usuarioBean.verificaSessaoAberta()}" value="Publicar" onclick="FuncaoAbreModal()"/>                                        
+                    </div>                
+                </header>                  
+            </div>
+            <!-- FIM div container do Header-->
+
+            <!--painel com as imagens:-->
+            <div class="container">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">Publicações:</h3>
+                    </div>
+
+                    <div class="img-responsive">
+                        <style type="text/css">
+                            .logo {
+                                width: 50%
+                            }
+
+                            .detail {
+                                width: 50%;
+                                padding-left: 25px;
+                            }
+
+                            /*.detail td {*/
+                            /*font-size: 24px;*/
+                            /*}*/
+
+                            .ui-datascroller .ui-datascroller-item {
+                                border-bottom: 1px solid #A8A8A8;
+                                padding: 25px 10px;
+                            }
+                        </style>
+                        <h:form> 
+                            <p:dataScroller value="#{publicacaoBean.listaPublicacao}" var="var" chunkSize="4">
+                                <f:facet name="header">
+                                    Veja e acompanhe os casos
+                                </f:facet>
+
+                                <h:panelGrid columns="2" style="width:90%" columnClasses="logo,detail">                                
+                                    <h:graphicImage value="/resources/uploads/urgencia-doacao/#{var.pub_CaminhoImagem}"  title="Imagem" class="img-responsive" width="300px" height="300px"/>
+
+                                    <p:outputPanel>
+                                        <h:panelGrid width="100%" class="img-responsive" columns="3" cellpadding="2" cellspacing="2px" border="0">
+
+                                            <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                                            <h:outputText value="Título:" style="font-weight: bold"/>
+                                            <h:outputText value="#{var.pub_Titulo}" />
+
+                                            <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                                            <h:outputText value="Nome do Protetor:" style="font-weight: bold"/>
+                                            <h:outputText value="#{var.pub_Nome_Prot}" />
+
+                                            <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                                            <h:outputText value="Nome do Animal:" style="font-weight: bold"/>
+                                            <h:outputText value="#{var.pub_Nome_Animal}" />
+
+                                            <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                                            <h:outputText value="Contato:" style="font-weight: bold"/>
+                                            <h:outputText value="#{var.pub_Contato}" />
+
+                                            <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                                            <h:outputText value="Descrição:" style="font-weight: bold" />
+                                            <h:outputText value="#{var.pub_Descricao}" />
+
+                                            <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                                            <h:outputText value="Data:" style="font-weight: bold" />                                        
+                                            <h:outputText value="#{publicacaoBean.getDateFormat(var)}" />
+
+                                            <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                                            <h:outputText value="Comentário:" style="font-weight: bold" />
+                                            <h:outputText value="#{var.pub_Comentario}" />
+
+                                            <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                                            <h:outputText value="Status:" style="font-weight: bold" />                                                                                    
+                                            <h:outputText style="font-weight: bold; font-size: 20px; font-style: italic; font-family: serif; color: #{publicacaoBean.retornaCor(var)}" value="#{publicacaoBean.statusOutputBean(var)}"/>                                                                                    
+                                            <br/>
+                                            <h:inputHidden/>
+                                            <h:inputHidden/>
+                                            <h:inputHidden/>
+                                            <p:commandButton rendered="#{usuarioBean.verificaSessaoAberta()}" style="color:#FFFFFF; background-color:#FEC64E" class="btn btn-primary text-muted" action="#{publicacaoBean.chamaModalUrgencia(var)}" value="Ajudar!"/>
+                                            <p:commandButton rendered="#{usuarioBean.verificaPubDoUsuario(var)}" style="color:#FFFFFF; background-color:#FEC64E" id="btnExcluirUrg"
+                                                             class="btn btn-primary text-muted" value="Excluir?" update="message"
+                                                             action="#{publicacaoBean.remocaoDePublicacaoUrgencia(var)}">
+                                                <p:confirm header="Confirmação" message="Você deseja excluir essa publicação?" icon="ui-icon-alert" />                                                    
+                                            </p:commandButton>
+                                            <p:growl id="message" showDetail="true"/>                                            
+                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closable="true">
+                                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />                                                
+                                            </p:confirmDialog> 
+                                        </h:panelGrid>
+
+                                    </p:outputPanel>
+                                </h:panelGrid>
+                            </p:dataScroller>
+                        </h:form>
+                    </div>                
+                </div>     
+            </div>
+
+            <!--Modal referente a tela de CadastroUrgencias-->
+            <div class="container">
+                <div class="modal fade" id="modalCadastroUrg" tabindex="-1" role="dialog" aria-labelledby="modalCadastroUrg" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button title="Fechar" data-toggle="tooltip" data-placement="bottom" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">x</span>
+                                </button>
+                                <h4 class="modal-title" id="ModalLabelLogin">Cadastro de Urgências</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h:form id="formCadUrgencia" enctype="multipart/form-data">                                    
+                                    <p:panel rendered="#{publicacaoBean.verificaCamposCadastroAlert()}" style="border: 0">                                 
+                                        <div class="alert alert-danger">
+                                            <a href="#" class="close" data-dismiss="alert">x</a>
+                                            <strong>Erro!</strong> Preencha todos os campos, tente novamente.
+                                        </div>
+                                    </p:panel> 
+
+                                    <p:outputLabel value="Título da Publicação:" class="text-muted"/>                           
+                                    <p:inputText type="text" value="#{publicacaoBean.pub_Ent.pub_Titulo}" required="" class="form-control text-muted" placeholder="Título da Publicação"/>
+
+                                    <p:outputLabel value="Nome do Animal:" class="text-muted"/>                           
+                                    <p:inputText type="text" value="#{publicacaoBean.pub_Ent.pub_Nome_Animal}" required="" class="form-control text-muted" placeholder="Nome do Animal"/>
+
+                                    <p:outputLabel value="Descrição:" class="text-muted"/>                           
+                                    <p:inputTextarea value="#{publicacaoBean.pub_Ent.pub_Descricao}" required="" class="form-control text-muted" placeholder="Descrição do caso"/>
+
+                                    <p:outputLabel value="Nome do Protetor:" class="text-muted"/>                           
+                                    <p:inputText type="text" value="#{publicacaoBean.pub_Ent.pub_Nome_Prot}" required="" class="form-control text-muted" placeholder="Nome do Protetor"/>
+
+                                    <p:outputLabel value="Contato:" class="text-muted"/>                           
+                                    <p:inputText type="text" value="#{publicacaoBean.pub_Ent.pub_Contato}" required="" class="form-control" placeholder="E-mail, telefone..."/>
+
+                                    <p:messages severity="info" escape="false" showDetail="true" autoUpdate="true" closable="true"/>
+                                    <p:outputLabel value="Selecione uma imagem:" class="text-muted"/>
+                                    <p:fileUpload fileUploadListener="#{publicacaoBean.upload}" label="Selecionar Imagem" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="1000000" invalidSizeMessage="Selecione uma imagem menor!"/>
+                                    <br/>
+                                    <p:outputLabel id="id_Select_Status" value="Selecione um Status: " class="text-muted"> 
+                                        <h:selectOneMenu value="#{publicacaoBean.pub_Ent.pub_Status}">
+                                            <f:selectItem  itemValue="1" itemLabel="Aberto" />
+                                            <f:selectItem itemValue="2" itemLabel="Andamento" /> 
+                                        </h:selectOneMenu>
+                                    </p:outputLabel>                             
+
+                                    <p class="help-block text-danger"></p>                                
+                                    <div class="modal-footer">                                                                        
+                                        <h:commandButton value="Cadastrar Urgência" class="btn btn-primary text-muted" action="#{publicacaoBean.cadastroDePublicacaoUrgencia()}"/>                                                      
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--FIM MODAL-->
+
+            <!-- Script para abrir Modal automaticamente quando há erro de cadastroUrgencias-->
+            <script type="text/javascript">
+
+                if (#{publicacaoBean.verificaCamposCadastroAlert()}) {
+                    $(window).load(function () {
+                        $('#modalCadastroUrg').modal('show');
+                    });
+                #{publicacaoBean.limpaErroAlert()};
+                }
+            </script>
+
+            <!--scripts para abrir o modal-->        
+            <script type="text/javascript">
+                function FuncaoAbreModal() {
+                    $('#modalCadastroUrg').modal('show');
+                }
+                ;
+            </script>
+        </ui:define> 
+        <h:outputScript name="./js/bootstrap.min.js"/>
+    </ui:composition>
+</html>

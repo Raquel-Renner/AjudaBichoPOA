@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"      
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"      
+      >
+
+    <h:head>
+        <title>AjudaBichoPOA</title>
+        <link rel="shortcut icon" href="resources/images/Logo/icone.ico" alt="Imagem_Logo_Sistema"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta charset="UTF-8"/>
+        <meta name="google-signin-scope" content="profile email"/>
+        <meta name="google-signin-client_id" content="502391398529-v2ucihe1tt6f2kaein6luulg69v1ter3.apps.googleusercontent.com"/>
+
+        <h:outputStylesheet name="./css/bootstrap/bootstrap.min.css"/>
+        <h:outputStylesheet name="./css/bootstrap/agency.css"/>        
+        <h:outputStylesheet name="./css/bootstrap/font-awesome/css/font-awesome.min.css"/>
+        <h:outputStylesheet name="./css/bootstrap/half-slider.css"/>
+
+        <!-- Custom Fonts --> 
+        <link href="resources/css/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+        <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'/>
+        <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'/>
+        <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'/>
+
+        <!--[if lt IE 9]>
+        <h:outputScript name="http://css3-mediaqueries-js.googlecode.com/files/css3-mediaqueries.js"/> 
+        <h:outputScript name="http://html5shim.googlecode.com/svn/trunk/html5.js"/> 
+        <![endif]-->
+
+        <!--                <script type="text/javascript">
+                            //Testando o jQuery  
+                            $(document).ready(function () {
+                                alert("Olá Mundo");
+                            });
+                        </script> 
+        -->
+        <script src="https://apis.google.com/js/platform.js"></script>        
+        <script src="https://apis.google.com/js/client:plus.js"></script>
+        <style type="text/css">
+            @import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,600,700,400);
+
+            .user {
+                padding: 50px 20px;
+                background: #FFFFFF;
+                border-radius: 2px;
+                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+                width: 330px;
+                display: block;
+                margin: 0 auto;
+            }
+
+            #user-photo {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                display: block;
+                margin: 0 auto 10px auto;
+            }
+
+            h1 {
+                display: block;
+                margin: 0 auto;
+                text-align: center;
+                font-weight: lighter;
+            }
+
+            #user-name {
+                color: #0066AA;
+                font-weight: bold;
+            }
+
+            #user-email {
+                display: block;
+                margin: 0 auto;
+                text-align: center;
+                color: #0066AA;
+            }
+
+            .g-signin2,
+            .g-signin2 .abcRioButton{
+                display: block;
+                margin: 20px auto 0 auto;
+                text-align: center;
+                background-color: #DD4B39;
+                width: 123px; 
+            }
+
+            .g-signin2,
+            .g-signin2 .abcRioButton:hover {
+                background-color: #DD4B39;
+            }
+        </style>
+    </h:head>
+
+    <h:body id="page-top" class="index">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <a class="page-scroll" href="#page-top">
+                        <img src="resources/images/Logo/logoUsado.png" title="AjudaBichoPOA" class="img-responsive" alt="Imagem_Logo_Sistema"/></a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden">
+                            <a href="#page-top"></a>                            
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#sobre">Sobre</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#portfolio">Urgências</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#doacoes">Doações</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#casataxi">Taxi Dog e casa de passagem</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#bichofeliz">Bicho Feliz</a>
+                        </li>
+                        <li>
+                            <h:form id="formBtnLogin">                        
+                                <h:commandButton class="btn btn-link page-scroll" type="button"
+                                                 rendered="#{!usuarioBean.verificaSessaoAberta()}" value="LOGIN" onclick="FuncaoAbreModalLoginIndex()" style="padding-top: 15px; color: white; text-decoration: none; font-family: Montserrat,Helvetica Neue,Helvetica,Arial,sans-serif"/>                                        
+                                <h:commandButton class="btn btn-link page-scroll"
+                                                 rendered="#{usuarioBean.verificaSessaoAbertaBotaoSair()}" value="SAIR" action="#{usuarioBean.fechaSessao()}" style="padding-top: 15px; color: white; text-decoration: none; font-family: Montserrat,Helvetica Neue,Helvetica,Arial,sans-serif"/>                                        
+                                <h:commandButton class="btn btn-link page-scroll" onclick="signOut();"
+                                                 rendered="#{usuarioBean.verificaSessaoAbertaGoogle()}" value="SAIR" action="#{usuarioBean.fechaSessao()}" style="padding-top: 15px; color: white; text-decoration: none; font-family: Montserrat,Helvetica Neue,Helvetica,Arial,sans-serif"/>                                        
+                                <h:commandButton class="btn btn-link page-scroll" onclick="logout();"
+                                                 rendered="#{usuarioBean.verificaSessaoAbertaFB()}" value="SAIR" action="#{usuarioBean.fechaSessao()}" style="padding-top: 15px; color: white; text-decoration: none; font-family: Montserrat,Helvetica Neue,Helvetica,Arial,sans-serif"/>                                        
+                            </h:form>                               
+                        </li>
+                    </ul>
+                </div>               
+            </div>      
+        </nav>
+
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="intro-text">
+                    <div class="intro-lead-in">Juntos pela causa animal</div>
+                    <div class="intro-heading">AjudaBichoPOA</div>                    
+                    <br/>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sobre Section -->
+        <section id="sobre" class="bg-light-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading">Quem somos?</h2>                       
+                        <br/>
+                        <br/>                       
+                    </div>
+                </div>
+                <h:panelGrid width="100%" class="img-responsive" columns="2" cellpadding="3%" cellspacing="5px" border="0">
+                    <img style="width: 95%;" src="resources/images/diversas/quemsomos.jpg" title = "Quem somos?" width = "400"  height="350" alt="Imagem_QuemSomos"/>
+                    <br/>
+                    <h:panelGrid width="95%" class="img-responsive text-muted" columns="1" cellpadding="0" cellspacing="0px" border="0">                      
+                        <h:outputText style="text-align: justify; padding-left: 3%" value="O AjudaBichoPOA, surgiu como uma nova ferramenta para auxiliar protetores de animais de Porto Alegre e região, voluntários e simpatizantes com a causa animal, se você se encaixa em algum dos perfis citados, seja bem-vindo!"/>                        
+                        <h:outputText style="text-align: justify; margin-left: 3%" value="Você poderá fazer divulgações por doações, casos de urgência ou socorro animal e caso necessite, poderá encontrar taxi dogs ou casas de passagem mais próximas."/>                          
+                        <h:outputText style="text-align: justify; margin-left: 3%" value="O AjudaBichoPOA funciona através da divulgação e colaboração entre os protetores e/ou voluntários, é um sistema para incentivar ajuda mútua e adoção aos animais necessitados, não possuindo sede ou espaço para abrigar ou recolher animais."/>                        
+                        <h:outputText style="text-align: justify; margin-left: 3%" value="Proporcione a você mesmo a experiência de ajudar e prestar solidariedade a animais carentes!"/>                                             
+                    </h:panelGrid>               
+                </h:panelGrid>
+            </div>
+        </section>
+
+        <!-- Urgências Grid Section -->
+        <section id="portfolio" style="background-color: #E8E8E8">            
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">                       
+                        <h:form>
+                            <h:commandLink action="urgencia"><h2 class="section-heading">Urgências</h2></h:commandLink>
+                            <br/>                            
+                        </h:form>                
+                        <h3 class="section-subheading text-muted">Divulgue casos de urgência ou resgates, e tenha o acompanhamento de cada caso.<br/>
+                            Ex.: Atropelamentos, emergências, situações de vulnerabilidade animal.</h3>
+                    </div>
+                </div>
+                <div class="row">                    
+                    <div class="portfolio-item">
+                        <h:form>
+                            <h:commandLink action="urgencia" class="portfolio-link">                       
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content">
+                                        <i class="fa fa-plus fa-3x"></i>
+                                    </div>
+                                </div>
+                                <h:graphicImage value="resources/images/diversas/urgencias.png" alt="Imagem_Urgencia" class="img-responsive" title="Urgências"/>                       
+                            </h:commandLink>
+                        </h:form>
+                        <div class="portfolio-caption">
+                            <p class="text-muted">Você pode ajudá-los?</p>                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Doações Section -->
+        <section id="doacoes" class="bg-light-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center"> 
+                        <h:form>
+                            <h:commandLink action="doacao"><h2 class="section-heading">Doações</h2></h:commandLink>
+                            <br/>                            
+                        </h:form>
+                        <h3 class="section-subheading text-muted">Encontre ou divulgue um amigo carente aqui!</h3>
+                    </div>
+                </div>   
+                <h:panelGrid width="100%" class="img-responsive" columns="2" cellpadding="5" cellspacing="5px" border="0">
+                    <h:panelGrid width="100%" class="img-responsive text-muted" columns="2" cellpadding="0" cellspacing="5px" border="0">
+                        <h:inputHidden/>
+                        <h:outputText style="margin-left: 10px" value="Se você está à procura de um amigo fiel, considere adotar!"/> <br/>
+
+                        <h:outputText style="margin-left: 10px" value="Adotando animais carentes você colabora para mudar esse quadro de abandono que presenciamos hoje em dia."/>
+                        <h:inputHidden/> 
+                        <h:outputText style="margin-left: 10px;" value="Além disso, você deixa de incentivar a venda e comércio de animais."/>
+                        <h:inputHidden/> 
+                        <h:outputText style="margin-left: 10px;" value="O AjudaBichoPOA apóia a “adoção responsável”:"/>                       
+                        <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                        <h:outputText style="margin-left: 10px" value="Nunca adotar um animal por impulso;"/>
+                        <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                        <h:outputText style="margin-left: 10px" value="Não dar animais de presente (serão responsabilidades a longo prazo);"/>
+                        <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                        <h:outputText style="margin-left: 10px" value="Ter em mente que um cão ou gato poderá viver aproximadamente 15 anos;"/>
+                        <h:inputHidden/>                         
+                        <h:inputHidden/> 
+                        <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                        <h:outputText style="margin-left: 10px" value="Evitar a compra impulsiva;"/>
+                        <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                        <h:outputText style="margin-left: 10px" value="Controlar a reprodução do animal e consequentemente superpopulação, através de castração;"/>
+                        <p:graphicImage value="/resources/images/diversas/pata_16.png" class="img-responsive"/>
+                        <h:outputText style="margin-left: 10px" value="Deverá ser proporcionado ao animal, saúde física, psicológica, água, comida..."/>                                
+                        <h:inputHidden/>
+                        <h:outputText style="margin-left: 10px" class="text-muted" value="Faça a diferença na vida de um animal e ganhe uma amizade longa e verdadeira!"/>
+                    </h:panelGrid> 
+                    <img class="img-responsive" src="resources/images/diversas/adote.png" title = "Divulgue! Adote!" width = "350"  height="290"/>
+                    <br/>
+                </h:panelGrid>
+
+            </div>
+        </section>
+
+        <!-- casataxi Section -->
+        <section id="casataxi" style="background-color: #E8E8E8">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h:form>
+                            <h:commandLink action="servicos"><h2 class="section-heading">Taxi Dogs e Casas de Passagem</h2>
+                            </h:commandLink>
+                            <br/>                            
+                        </h:form> 
+                        <h3 class="section-subheading text-muted">Encontre aqui os locais mais próximos</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="portfolio-item">                      
+                        <div class="casataxi-member">
+                            <!--teste-->
+                            <h:form>
+                                <h:commandLink action="servicos">                       
+                                    <img src="resources/images/diversas/circularMapa.png" class="img-responsive img-circle" alt="Imagem_Link_Mapa"/>
+                                </h:commandLink>
+                            </h:form>                          
+                            <p class="text-muted">Eventualmente, os protetores encontram animais abandonados ou em situação de perigo. Nessas situações, mesmo determinados a ajudar,
+                                muitas vezes faltam meios para transportá-los e espaço para abrigá-los.</p>
+                            <p class="text-muted">O AjudaBichoPOA ajuda você a encontrar um lugar provisório para o animalzinho e/ou até mesmo transporte adequado para ele.</p>                           
+                        </div>
+                    </div>                   
+                </div>
+            </div> 
+        </section>
+
+        <!-- bichofeliz Section -->
+        <section id="bichofeliz" class="bg-light-gray">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h:form>
+                            <h:commandLink action="bichoFeliz"><h2 class="section-heading">Bicho Feliz</h2>
+                            </h:commandLink>
+                            <br/>                            
+                        </h:form> 
+                    </div>
+                </div>
+                <div id="myCarousel" class="carousel slide">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for Slides -->
+                    <div class="carousel-inner">                        
+                        <div class="item active">                         
+                            <!-- Set the first background image using inline CSS below. -->				
+                            <div class="img-responsive">
+                                <img class="img-responsive  img-centered" style="height: 400px" src="resources/images/Lua_Slides/LuaInicio.png"/>
+
+                            </div>
+                            <div class="carousel-caption">
+                                <h2>Lua Doente</h2>
+                            </div>
+                        </div>
+                        <div class="item">                            
+                            <!-- Set the second background image using inline CSS below. -->
+                            <div class="img-responsive">
+                                <img class="img-responsive img-centered" style="height: 400px" src="resources/images/Lua_Slides/LuaTratamento.png"/>
+                            </div>
+                            <div class="carousel-caption">
+                                <h2>Lua em tratamento</h2>
+                            </div>
+                        </div>
+                        <div class="item"> 
+                            <div class="img-responsive">
+                                <img class="img-responsive  img-centered" style="height: 400px" src="resources/images/Lua_Slides/LuaLinda.png"/>
+                            </div>
+                            <div class="carousel-caption">
+                                <h2>Lua linda</h2>
+                            </div>
+                        </div>
+                    </div> 
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="icon-prev"></span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="icon-next"></span>
+                    </a>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <br/>
+                        <h3 class="section-subheading text-muted">Encontre aqui os casos de sucesso!</h3>                       
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--Modais inicio-->
+        <!--Modal referente a tela de Login-->
+        <div class="container">
+            <div class="modal fade" id="modalLogin" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogin" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content bg-light-gray">
+                        <h:form id="form_Container">
+                            <div class="modal-header">      
+                                <h:commandButton title="Fechar" id="btnFechar" value="x" class="btn btn-default text-muted pull-right" 
+                                                 actionListener="#{usuarioBean.retornoIDGoogleFace(request, response)}">                                         
+                                    <f:passThroughAttribute name="data-toggle" value="tooltip" />
+                                    <f:passThroughAttribute name="data-placement" value="bottom" />
+                                </h:commandButton>                                
+                                <h4 class="modal-title" id="ModalLabelLogin">Login</h4>                            
+                            </div>
+                            <div class="modal-body">
+                                <!--<h:form id="form_Container">-->
+                                <p:panel rendered="#{usuarioBean.verificaDadosLogin()}" style="border: 0" class="bg-light-gray">                                    
+                                    <div class="alert alert-danger">
+                                        <a href="#" class="close" data-dismiss="alert">x</a>
+                                        <strong>Erro!</strong> Dados incorretos/inválidos, tente novamente.
+                                    </div>
+                                </p:panel> 
+                                <div class="form-group">                                    
+                                    <div class="casataxi-member">                                    
+                                        <p class="text-muted">Entrar usando rede social:</p>                                 
+                                        <table>
+                                            <td>
+                                                <tr>
+                                                    <h:form id="inputHiddenFaces">                                                        
+                                                        <input type="hidden" id="idFace" name="idFace"/>                                                                                                      
+                                                        <input type="hidden" id="userNameFace" name="userNameFace"/>  
+                                                        <input type="hidden" id="idGoogle" name="idGoogle"/>                                                                                                      
+                                                        <input type="hidden" id="userNameGoogle" name="userNameGoogle"/> 
+                                                    </h:form>           
+                                                    <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" 
+                                                         data-auto-logout-link="false" data-scope="basic_info"></div>                                                   
+                                                </tr>                                           
+                                                <tr>
+                                                    <p class="text-muted"> </p>
+                                                </tr>
+                                                <tr> 
+                                                    <div class="g-signin2" 
+                                                         data-clientid="502391398529-v2ucihe1tt6f2kaein6luulg69v1ter3.apps.googleusercontent.com"
+                                                         data-onsuccess="onSignIn" 
+                                                         data-theme="dark" 
+                                                         data-width="123"
+                                                         data-height="39"                                                          
+                                                         data-lang="pt-BR">                                                         
+                                                    </div>
+                                                    <br/>
+                                                </tr>
+                                            </td>
+                                        </table>
+                                    </div>
+                                    <!--Linha divisória para conta registrada-->
+                                    <div class="modal-footer-login" id="linhaApenas"></div>                                    
+                                    <p class="text-muted text-center">Entrar usando conta registrada:</p>                                       
+                                    <p:outputLabel id="nomeLogin" value="Usuário:" class="text-muted"/>                           
+                                    <p:inputText id="userEntrar" type="text" value="#{usuarioBean.usuario.usu_Nome}" class="form-control text-muted" placeholder="Usuário"/>                                                                     
+                                    <p:message for="userEntrar"/>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">                                                                            
+                                </div>
+                                <p:outputLabel value="Senha:"  class="text-muted"/>                           
+                                <p:password id="feedbackLogin" promptLabel="Por favor, preencha o campo senha" maxlength="8" value="#{usuarioBean.usuario.usu_Senha}" class="form-control" placeholder="Senha"/>                                
+
+                                <p class="help-block text-danger"></p>
+                                <br/>
+                                <div class="text-right">                                     
+                                    <h:commandButton title="Login a partir de conta registrada" id="btnLogar" value="Logar" class="btn btn-primary text-muted" 
+                                                     actionListener="#{usuarioBean.autorizaLogin(nome, senha)}">                                         
+                                        <f:passThroughAttribute name="data-toggle" value="tooltip" />
+                                        <f:passThroughAttribute name="data-placement" value="left" />
+                                    </h:commandButton>
+                                    <a class="page-scroll btn btn-default text-muted" type="button" data-toggle="modal" href="#modalCadastro">Cadastrar?</a>                                                                        
+                                </div>  
+                            </div>    
+                        </h:form>
+                    </div>
+                </div>
+            </div>  
+        </div>
+
+        <!--Modal referente a tela de CadastroLogin-->
+        <div class="container">
+            <div class="modal fade" id="modalCadastro" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalCadastro" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content bg-light-gray">
+                        <div class="modal-header"> 
+                            <button type="button" title="Fechar" data-toggle="tooltip" data-placement="bottom" class="btn btn-default text-muted pull-right" data-dismiss="modal">x</button>
+                            <h4 class="modal-title" id="ModalLabelCadastro">Cadastre-se</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h:form>
+                                <p:panel id="panelDadosCad" rendered="#{usuarioBean.verificaDadosCadastro()}" style="border: 0" class="bg-light-gray">                                    
+                                    <div class="alert alert-danger">
+                                        <a href="#" class="close" data-dismiss="alert">x</a>
+                                        <strong>Erro!</strong> Preencha todos os campos, tente novamente.
+                                    </div>
+                                </p:panel> 
+                                <p:panel id="panelDadosCadExist" rendered="#{usuarioBean.verificaDadosCadastroExist()}" style="border: 0" class="bg-light-gray">                                    
+                                    <div class="alert alert-danger">
+                                        <a href="#" class="close" data-dismiss="alert">x</a>
+                                        <strong>Erro!</strong> Nome de usuário já existente, tente novamente.
+                                    </div>
+                                </p:panel> 
+
+                                <p:outputLabel value="Usuário:" class="text-muted"/>                           
+                                <p:inputText type="text" value="#{usuarioBean.usuario.usu_Nome}" class="form-control text-muted" placeholder="Usuário"/>
+                                <p class="help-block text-danger"></p>
+                                <p:outputLabel value="E-mail:" class="text-muted"/>                           
+                                <p:inputText type="email" value="#{usuarioBean.usuario.usu_Email}" class="form-control" placeholder="E-mail"/>
+                                <p class="help-block text-danger"></p>
+                                <p:outputLabel value="Senha:"  class="text-muted"/>                                                           
+                                <p:password id="feedbackCadLogin" inline="true" promptLabel="Por favor, preencha o campo senha" maxlength="8" value="#{usuarioBean.usuario.usu_Senha}" 
+                                            feedback="true" class="form-control" placeholder="Senha" weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte"/>                                
+                                <p class="help-block text-danger"></p>
+                                <div class="modal-footer">
+                                    <h:commandButton title="Cadastrar-se no sistema" id="btnCadastrar" value="Cadastrar" class="btn btn-primary text-muted" 
+                                                     actionListener="#{usuarioBean.cadastroDeUsuario()}">                                         
+                                        <f:passThroughAttribute name="data-toggle" value="tooltip" />
+                                        <f:passThroughAttribute name="data-placement" value="left" />
+                                    </h:commandButton>
+                                </div> 
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <!--Modais fim-->
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+
+                        <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>
+                        <span class="copyright">2015 AjudaBichoPOA - Direitos reservados.</span>                    
+                    </div>
+                    <div class="col-md-4">
+                        <span class="copyright">Dúvidas, Sugestões, Reclamações:<br/></span>
+                        <span class="copyright">contato@ajudabichopoa.com</span>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-inline social-buttons">
+                            <li><a href="https://twitter.com/AjudaBicho" target="_blank"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="https://www.facebook.com/ajudabichopoa?fref=ts" target="_blank"><i class="fa fa-facebook"></i></a>
+                            </li>                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Script para abrir Modal automaticamente quando há erro de login -->
+        <script type="text/javascript">
+            if (#{usuarioBean.verificaDadosLogin()}) {
+                $(window).load(function () {
+                    $('#modalLogin').modal('show');
+                });
+            #{usuarioBean.limpaErroLogin()};
+            }
+        </script>
+        <!-- Script para abrir Modal automaticamente quando há erro de cadastroLogin -->
+        <script type="text/javascript">
+            if (#{usuarioBean.verificaDadosCadastro()}) {
+                $(window).load(function () {
+                    $('#modalCadastro').modal('show');
+                });
+            #{usuarioBean.limpaErroCad()};
+            }
+        </script>        
+        <!-- Script para abrir Modal automaticamente quando há erro de cadastroExist -->
+        <!--Verificar se é true ou false, ql correto-->
+        <script type="text/javascript">
+            if (#{usuarioBean.verificaDadosCadastroExist()}) {
+                $(window).load(function () {
+                    $('#modalCadastro').modal('show');
+                });
+            #{usuarioBean.limpaErroCadExist()};
+            }
+        </script>
+
+
+
+        <!-- jQuery -->        
+        <h:outputScript name="./js/jquery-1.11.2.min.js"/>
+        <!--<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />-->
+
+        <!-- Bootstrap Core JavaScript -->
+        <h:outputScript name="./js/bootstrap.min.js"/>
+
+        <!-- Plugin JavaScript -->
+        <!--<h:outputScript name="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"/>-->
+        <h:outputScript name="./js/classie.js"/>
+        <h:outputScript name="./js/cbpAnimatedHeader.js"/>
+        <h:outputScript name="./js/jquery.easing.min.js"/>
+
+        <!-- Contact Form JavaScript -->
+        <!--<h:outputScript name="./js/contact_me.js"/>-->
+        <h:outputScript name="./js/jqBootstrapValidation.js"/> <!--commentar mas precisa p transiçao-->
+
+        <!-- Custom Theme JavaScript -->
+        <h:outputScript name="./js/agency.js"/>
+        <h:outputScript name="./js/jquery.bsAlerts.js"/>
+
+        <!-- Script to Activate the Carousel (slides) -->
+        <script>
+            $('.carousel').carousel({
+                interval: 4000 //changes the speed
+            });</script>
+
+        <!--scripts para abrir o modal-->        
+        <script type="text/javascript">
+            function FuncaoAbreModalLoginIndex() {
+                $('#modalLogin').modal('show');
+            }
+            ;
+        </script>
+
+        <!--scripts para usar o tooltip-->        
+        <script type="text/javascript">
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        </script>
+
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '474099922738511', // App ID
+                    //    channelUrl : '://sudiproy89-fb-login-mooc.herokuapp.com/channel.html', // Channel File
+                    status: true, // check login status
+                    cookie: true, // enable cookies to allow the server to access the session
+                    xfbml: true  // parse XFBML
+                });
+                // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
+                // for any authentication related change, such as login, logout or session refresh. This means that
+                // whenever someone who was previously logged out tries to log in again, the correct case below 
+                // will be handled. 
+                FB.Event.subscribe('auth.authResponseChange', function (response) {
+                    // Here we specify what we doB with the response anytime this event occurs. 
+                    if (response.status === 'connected') {
+                        // The response object is returned with a status field that lets the app know the current
+                        // login status of the person. In this case, we're handling the situation where they 
+                        // have logged in to the app.
+                        testAPI();
+                    } else if (response.status === 'not_authorized') {
+                        // In this case, the person is logged into Facebook, but not into the app, so we call
+                        // FB.login() to prompt them to do so. 
+                        // In real-life usage, you wouldn't want to immediately prompt someone to login 
+                        // like this, for two reasons:
+                        // (1) JavaScript created popup windows are blocked by most browsers unless they 
+                        // result from direct interaction from people using the app (such as a mouse click)
+                        // (2) it is a bad experience to be continually prompted to login upon page load.
+                        FB.login();
+                    } else {
+                        // In this case, the person is not logged into Facebook, so we call the login() 
+                        // function to prompt them to do so. Note that at this stage there is no indication
+                        // of whether they are logged into the app. If they aren't then they'll see the Login
+                        // dialog right after they log in to Facebook. 
+                        // The same caveats as above apply to the FB.login() call here.
+                        FB.login();
+                    }
+                });
+            };
+            // Load the SDK asynchronously
+            (function (d) {
+                var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement('script');
+                js.id = id;
+                js.async = true;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                ref.parentNode.insertBefore(js, ref);
+            }(document));
+            // Here we run a very simple test of the Graph API after login is successful. 
+            // This testAPI() function is only called in those cases. 
+            function testAPI() {
+                console.log('Welcome!  Fetching your information.... ');
+                FB.api('/me', function (response) {
+
+//pegando os dados do perfil do user
+                    var userIDFace = response.id;
+                    var userNameFace = response.name;
+                    document.getElementById("idFace").value = userIDFace;
+                    document.getElementById("userNameFace").value = userNameFace;
+                    console.log('Good to see you, ' + response.id + '.');
+                });
+            }
+
+            function logout() {
+                FB.logout(function (response) {
+                    // user is now logged out
+                });
+            }
+        </script>
+        <!--ULTIMO TESTE FIM-->
+
+        <!--//LOGIN E LOGOUT COM O GOOGLE-->
+        <script>
+            function onSignIn(response) {
+                // Conseguindo as informações do seu usuário:
+                var perfil = response.getBasicProfile();
+
+                // Conseguindo o ID do Usuário
+                var userID = perfil.getId();
+
+                // Conseguindo o Nome do Usuário
+                var userName = perfil.getName();
+
+                // Conseguindo o E-mail do Usuário
+//                var userEmail = perfil.getEmail();
+
+                // Conseguindo a URL da Foto do Perfil
+//                var userPicture = perfil.getImageUrl();
+
+//                document.getElementById('user-photo').src = userPicture;
+//                document.getElementById('user-name').innerText = userName;
+//                document.getElementById('user-email').innerText = userEmail;
+
+                document.getElementById("idGoogle").value = userID;
+                document.getElementById("userNameGoogle").value = userName;
+
+                // Recebendo o TOKEN que você usará nas demais requisições à API:
+                var LoR = response.getAuthResponse().id_token;
+                console.log("~ le Tolkien: " + LoR);
+            }
+            ;
+
+            function signOut() {
+                console.log(document);
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                });
+            }
+
+        </script>
+    </h:body>
+</html>

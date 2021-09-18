@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"      
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"      
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"  
+      xmlns:p="http://primefaces.org/ui"> 
+    <h:head>
+        <title>AjudaBichoPOA</title>
+        <link rel="shortcut icon" href="resources/images/Logo/icone.ico"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+        <h:outputStylesheet name="./css/bootstrap/bootstrap.min.css"/>       
+        <h:outputStylesheet name="./css/bootstrap/bootstrap.min_Dois.css"/>       
+        <h:outputStylesheet name="./css/bootstrap/agency.css"/>
+        <h:outputStylesheet name="./css/bootstrap/font-awesome/css/font-awesome.min.css"/>   
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
+
+
+        <script>
+            function funcao(ancora) {
+                this.location = "#" + ancora;
+            }
+        </script> 
+
+
+    </h:head>
+
+    <h:body>
+        <!--início da navbar-->
+        <div class="navbar navbar-inverse navbar-fixed-top" style="min-height: 80px; padding-top: 5px">
+
+            <div class="container">                  
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" 
+                            data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>  
+                        <span class="icon-bar"></span> 
+                    </button>
+                    <a class="page-scroll" href="index.xhtml">
+                        <img src="resources/images/Logo/logoUsado.png" title="AjudaBichoPOA" class="img-responsive" alt="Imagem_Logo_Sistema"/></a>
+                </div>            
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>                                
+                            <a class="page-scroll" href="#contact" style="color: #fff; font-weight:  800; font-family: Montserrat,Helvetica Neue,Helvetica,Arial,sans-serif">CONTATO</a>                                                                                       
+                        </li>
+                        <li>
+                            <h:link class="page-scroll" outcome="index" style="color: #fff; font-weight:  800; font-family: Montserrat,Helvetica Neue,Helvetica,Arial,sans-serif">VOLTAR</h:link>
+                        </li>  
+                    </ul>
+                </div>
+            </div>        
+        </div> 
+        <!--final da navbar-->
+
+        <!--div container do Header-->
+        <div class="container">
+            <!-- Jumbotron Header -->
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <header class="jumbotron" style="background-size: cover;">
+                <h1 style="color: white">Taxi Dogs e Casas de Passagem</h1>
+                <b style="color: white; font-family: arial">Você quer ajudar um animal, mas não possui transporte?</b><br/>
+                <b style="color: white; font-family: arial">Você quer proporcionar um abrigo para um animal carente, mas não possui condições ou espaço em casa?</b><br/>
+                <b style="color: white; font-family: arial">Veja aqui algumas opções dos serviços de Taxi Dogs e Casas de Passagem!</b>
+                <br/>                                  
+                <br/>  
+                <div class="list-inline text-center">                            
+                </div>
+            </header>  
+        </div>
+
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-center">Encontre aqui Taxi Dogs e casas de Passagem</h3>                
+                </div>
+
+                <div class="panel-body bg-light-gray">
+                    <br/>                       
+                    <div class="map-container" id="mapa"/>
+                    <!--                            <iframe width = "700px"   height = "500px" frameborder = "0"   scrolling = "no"   
+                                                        marginheight = "0" marginwidth = "0">                                        
+                                                </iframe>                           -->
+                    <form id="formRota" action="servicos.xhtml" style="text-align: center" >
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12 text-center">                                            
+                                    <h3 class="section-subheading">Gerar Rota</h3>
+                                </div>
+                            </div>                                         
+
+                            <h:outputLabel class="section-subheading text-muted" for="txtEnderecoPartida">Endereço de partida:</h:outputLabel>
+                            <h:inputText size="30" pt:placeholder="Digite o Endereço de Partida" id="txtEnderecoPartida" />
+                            <h:inputHidden/>
+                            <h:outputText value="   "/>
+                            <h:outputLabel class="section-subheading text-muted" for="txtEnderecoPartida">Endereço de chegada:</h:outputLabel>
+                            <h:inputText size="30" pt:placeholder="Digite o Endereço de Chegada" id="txtEnderecoChegada" />                                
+                            <div>
+                                <input type="submit" id="btnEnviar" class="btn btn-primary" name="Gerar" value="Gerar" />
+                            </div>                                  
+                        </fieldset>
+                    </form>
+                    <br/>
+                    <br/>
+
+                    <!--DELETAR-->    
+                    <!--                    <div onclick="funcao('contact');"> 
+                                            Corpo Doscente da Especialização 
+                                        </div>-->
+
+                    <!--Seção referente à contato para solicitaçao-->
+                    <section id="contact" style="background-color: #C6C6C6">
+                        <div class="container">
+                            <div class="row">
+                                <!--Painel caso o email seja enviado-->
+                                <p:panel style="background-color: #C6C6C6; border: 0; max-width: 70%" 
+                                         rendered="#{contatoBean.verificaCamposAlertSucess()}">                                    
+                                    <div class="alert alert-success">
+                                        <a href="#" class="close" data-dismiss="alert">x</a>
+                                        <strong>Ok! Solicitação enviada!</strong> Assim que possível, entraremos em contato.
+                                    </div>
+                                </p:panel> 
+                                <div class="col-lg-12 text-center">
+                                    <h2 class="section-heading" style="color: #000000">Contato</h2>
+                                    <h3 class="section-subheading" style="color: #000000">Caso queira incluir um serviço de Taxi Dog ou Casa de Passagem aqui no AjudaBichoPOA entre em contato!</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">                                              
+                                    <p:messages id="messages" autoUpdate="true" closable="true" style="max-width: 70%"/>
+                                    <h:form id="formMail">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <p:outputLabel value="Nome:" class="section-subheading" style="color: #000000"/> 
+                                                    <p:inputText type="text" class="form-control" placeholder="Seu Nome" id="name" required="true" 
+                                                                 requiredMessage="Por favor, preencha o campo Nome"
+                                                                 value="#{contatoBean.contatoEnt.cont_Nome}"/>                                                                                                                        
+                                                </div>
+                                                <div class="form-group">
+                                                    <p:outputLabel value="E-mail:" class="section-subheading" style="color: #000000"/> 
+                                                    <p:inputText type="email" class="form-control" placeholder="Seu E-mail" id="email" required="true" 
+                                                                 requiredMessage="Por favor, preencha o campo Email"
+                                                                 value="#{contatoBean.contatoEnt.cont_Email}"/>                                                            
+                                                </div>
+                                                <div class="form-group">
+                                                    <p:outputLabel value="Telefone:" class="section-subheading" style="color: #000000"/> 
+                                                    <!--<p:inputText type="tel" class="form-control" placeholder="Seu  Telefone" id="phone" required="true" 
+                                                                 requiredMessage="Por favor, preencha o campo Telefone"
+                                                                 value="{contatoBean.contatoEnt.cont_Telefone}"/>    -->
+                                                    <p:inputMask class="form-control" placeholder="Seu  Telefone" id="phone" required="true" 
+                                                                 requiredMessage="Por favor, preencha o campo Telefone"
+                                                                 value="#{contatoBean.contatoEnt.cont_Telefone}" mask="(99) 9999-9999"/>
+
+                                                </div>                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <p:outputLabel value="Mensagem:" class="section-subheading" style="color: #000000"/> 
+                                                    <p:inputTextarea class="form-control" placeholder="Inclua aqui as informações: Nome, Endereço completo, Telefone e E-mail do serviço a ser incluído." id="message" 
+                                                                     required="true" requiredMessage="Por favor, preencha o campo Mensagem"
+                                                                     value="#{contatoBean.contatoEnt.cont_Msg}"></p:inputTextarea>                
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="col-lg-12 text-center">
+                                                <div id="success"></div>                                                       
+                                                <!--<div onclick="funcao('contact');">-->
+                                                <h:commandButton value="Enviar Solicitação" class="btn btn-xl" action="#{contatoBean.mandaMail()}"/>
+
+                                                <!--                                                    //só funciona com <a> e <div>
+                                                                                                            nem button nem command-->
+                                                <!--</div>-->
+                                            </div>
+                                        </div>
+                                    </h:form>                                     
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!--Fecha panel body-->
+            </div>     
+        </div>
+
+        <!--teste responsividade com CSS-->
+        <style>
+
+            .map-container  { 
+                position :   relative ; 
+                padding-bottom : 50% ; 
+                padding-top :   30px ; 
+                height :   0 ; 
+                overflow :   hidden ; 
+            } 
+
+            .map-container iframe, 
+            .map-container object, 
+            .map-container embed  { 
+                position :   absolute ; 
+                top :   0 ; 
+                left :   0 ; 
+                width :   100% ; 
+                height :   100% ; 
+            } 
+
+        </style>
+
+        <!--Infobox Style-->
+        <style>
+            .infoBox { background-color: #FFF; width: 300px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; border: 2px solid #3fa7d8; border-radius: 3px; margin-top: 10px }
+            .infoBox p { padding: 0 15px }
+            .infoBox:before { border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid #3fa7d8; top: -10px; content: ""; height: 0; position: absolute; width: 0; left: 138px }
+        </style>
+
+        <!--Script para setar false inicialmente para o Alert (CamposPreenchidos)-->
+        <script type="text/javascript">
+            #{contatoBean.limpaErroAlert()};
+        </script>
+
+        <!--Script para Ancorar a parte de contato no retono do e-mail-->
+        <script type="text/javascript">
+            function ancorar() {
+                alert("entrou no ancorar")
+                var elem = document.getElementById("nameTeste");
+                //                window.location("http://localhost:8080/AjudaBichoPOA/faces/servicos.xhtml#contact");
+                alert("passou a linha, valorelem: " + elem)
+                elem.scrollIntoView();
+            }
+
+        </script>
+
+        <!-- Maps API Javascript -->
+        <script src="http://maps.googleapis.com/maps/api/js?key=&amp;sensor=false"></script>
+        <script src="resources/mapataxi/mapa.js"></script>
+        <h:outputScript name="./js/jquery-1.11.2.min.js"/>
+        <h:outputScript name="./js/bootstrap.min.js"/>              
+        <h:outputScript name="./js/infobox.js"/>
+        <h:outputScript name="./js/jquery.easing.min.js"/>
+        <h:outputScript name="./js/agency.js"/>
+    </h:body>
+</html>

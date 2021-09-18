@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"      
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      >
+
+    <h:head>
+        <title>AjudaBichoPOA</title>
+        <link rel="shortcut icon" href="resources/images/Logo/icone.ico" alt="Imagem_Logo_Sistema"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="google-signin-scope" content="profile email"/>
+        <meta name="google-signin-client_id" content="502391398529-v2ucihe1tt6f2kaein6luulg69v1ter3.apps.googleusercontent.com"/>
+
+        <h:outputStylesheet name="./css/bootstrap/bootstrap.min.css"/>       
+        <h:outputStylesheet name="./css/bootstrap/bootstrap.min_Dois.css"/>       
+        <h:outputStylesheet name="./css/bootstrap/agency.css"/>
+        <h:outputStylesheet name="./css/bootstrap/font-awesome/css/font-awesome.min.css"/>   
+
+        <script src="https://apis.google.com/js/platform.js"></script>        
+        <script src="https://apis.google.com/js/client:plus.js"></script>
+        <style type="text/css">
+            @import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,600,700,400);
+
+            .user {
+                padding: 50px 20px;
+                background: #FFFFFF;
+                border-radius: 2px;
+                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+                width: 330px;
+                display: block;
+                margin: 0 auto;
+            }
+
+            #user-photo {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                display: block;
+                margin: 0 auto 10px auto;
+            }
+
+            /*            h1 {
+                            display: block;
+                            margin: 0 auto;
+                            text-align: center;
+                            font-weight: lighter;
+                        }*/
+
+            #user-name {
+                color: #0066AA;
+                font-weight: bold;
+            }
+
+            #user-email {
+                display: block;
+                margin: 0 auto;
+                text-align: center;
+                color: #0066AA;
+            }
+
+            .g-signin2,
+            .g-signin2 .abcRioButton{
+                display: block;
+                margin: 20px auto 0 auto;
+                text-align: center;
+                background-color: #DD4B39;
+                width: 123px; 
+            }
+
+            .g-signin2,
+            .g-signin2 .abcRioButton:hover {
+                background-color: #DD4B39;
+            }
+        </style>
+    </h:head>
+
+    <h:body class="bg-light-gray">        
+        <ui:insert name="menuFixo">
+
+            <div class="navbar navbar-inverse navbar-fixed-top" style="min-height: 80px; padding-top: 5px">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" 
+                                data-target=".navbar-collapse">
+
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>                        
+                        </button>
+                        <a class="page-scroll" href="index.xhtml">
+                            <img src="resources/images/Logo/logoUsado.png" title="AjudaBichoPOA" class="img-responsive" alt="Imagem_Logo_Sistema"/></a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <h:link class="page-scroll" outcome="index" style="color: #fff; font-weight:  800; font-family: Montserrat,Helvetica Neue,Helvetica,Arial,sans-serif">VOLTAR</h:link>
+                            </li>                                
+                            <li>                                
+                                <h:form id="formBtnLogin">                        
+                                    <h:commandButton class="btn btn-link page-scroll" type="button"
+                                                     rendered="#{!usuarioBean.verificaSessaoAberta()}" value="LOGIN" onclick="FuncaoAbreModalLoginTDefault()" style="padding-top: 15px; color: white; text-decoration: none; font-family: Montserrat,Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:  800"/>                                        
+                                    <h:commandButton class="btn btn-link page-scroll"
+                                                     rendered="#{usuarioBean.verificaSessaoAbertaBotaoSair()}" value="SAIR" action="#{usuarioBean.fechaSessao()}" style="padding-top: 15px; color: white; text-decoration: none; font-family: Montserrat,Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:  800"/>                                        
+                                    <h:commandButton class="btn btn-link page-scroll" onclick="signOut();"
+                                                     rendered="#{usuarioBean.verificaSessaoAbertaGoogle()}" value="SAIR" action="#{usuarioBean.fechaSessao()}" style="padding-top: 15px; color: white; text-decoration: none; font-family: Montserrat,Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:  800"/>                                        
+                                    <h:commandButton class="btn btn-link page-scroll" onclick="logout();"
+                                                     rendered="#{usuarioBean.verificaSessaoAbertaFB()}" value="SAIR" action="#{usuarioBean.fechaSessao()}" style="padding-top: 15px; color: white; text-decoration: none; font-family: Montserrat,Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:  800"/>                                        
+                                </h:form> 
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modais inicio-->
+            <!--Modal referente a tela de Login-->
+            <div class="container">
+                <div  class="modal fade" id="modalLoginTDefault" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalLogin" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content bg-light-gray">
+                            <h:form id="form_Container">
+                                <div class="modal-header">                            
+                                    <h:commandButton title="Fechar" id="btnFecharDef" value="x" class="btn btn-default text-muted pull-right" 
+                                                     actionListener="#{usuarioBean.retornoIDGoogleFace(request, response)}">                                         
+                                        <f:passThroughAttribute name="data-toggle" value="tooltip" />
+                                        <f:passThroughAttribute name="data-placement" value="bottom" />
+                                    </h:commandButton>                                
+                                    <h4 class="modal-title" id="ModalLabelLogin">Login</h4>                            
+                                </div>
+                                <div class="modal-body">
+                                    <p:panel rendered="#{usuarioBean.verificaDadosLogin()}" style="border: 0" class="bg-light-gray">                                    
+                                        <div class="alert alert-danger">
+                                            <a href="#" class="close" data-dismiss="alert">x</a>
+                                            <strong>Erro!</strong> Dados incorretos/inválidos, tente novamente.
+                                        </div>
+                                    </p:panel> 
+
+                                    <div class="form-group">                                    
+                                        <div class="casataxi-member">                                    
+                                            <p class="text-muted">Entrar usando rede social:</p>                                 
+                                            <table>
+                                                <td>
+                                                    <tr>
+                                                        <h:form id="inputHiddenFaces">                                                        
+                                                            <input type="hidden" id="idFace" name="idFace"/>                                                                                                      
+                                                            <input type="hidden" id="userNameFace" name="userNameFace"/>  
+                                                            <input type="hidden" id="idGoogle" name="idGoogle"/>                                                                                                      
+                                                            <input type="hidden" id="userNameGoogle" name="userNameGoogle"/> 
+                                                        </h:form>           
+                                                        <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" 
+                                                             data-auto-logout-link="false" data-scope="basic_info"></div>                                                   
+                                                    </tr>                                           
+                                                    <tr>
+                                                        <p class="text-muted"> </p>
+                                                    </tr>
+                                                    <tr> 
+                                                        <div class="g-signin2" 
+                                                             data-clientid="502391398529-v2ucihe1tt6f2kaein6luulg69v1ter3.apps.googleusercontent.com"
+                                                             data-onsuccess="onSignIn" 
+                                                             data-theme="dark" 
+                                                             data-width="123"
+                                                             data-height="39"                                                          
+                                                             data-lang="pt-BR">                                                         
+                                                        </div>
+                                                        <br/>
+                                                    </tr>
+                                                </td>
+                                            </table>
+                                        </div>
+                                        <!--Linha divisória para conta registrada-->
+                                        <div class="modal-footer-login" id="linhaApenas"></div> 
+                                        <p class="text-muted text-center">Entrar usando conta registrada:</p>                                       
+                                        <p:outputLabel id="nomeLoginTD" value="Usuário:" class="text-muted"/>                           
+                                        <p:inputText id="userEntrarTD" type="text" value="#{usuarioBean.usuario.usu_Nome}" class="form-control text-muted" placeholder="Usuário"/>                                                                     
+                                        <p:message for="userEntrarTD"/>
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="form-group">                                                                            
+                                    </div>
+                                    <p:outputLabel value="Senha:"  class="text-muted"/>                           
+                                    <p:password id="feedbackLoginTD" promptLabel="Por favor, preencha o campo senha" maxlength="8" value="#{usuarioBean.usuario.usu_Senha}" class="form-control" placeholder="Senha"/>                                
+
+                                    <p class="help-block text-danger"></p> 
+                                    <br/>
+                                    <div class="text-right">                                                       
+                                        <h:commandButton title="Login a partir de conta registrada" id="btnLogarDef" value="Logar" class="btn btn-primary text-muted" 
+                                                         actionListener="#{usuarioBean.autorizaLogin(nome, senha)}">                                         
+                                            <f:passThroughAttribute name="data-toggle" value="tooltip" />
+                                            <f:passThroughAttribute name="data-placement" value="left" />
+                                        </h:commandButton>
+                                        <a class="page-scroll btn btn-default text-muted" type="button" data-toggle="modal" href="#modalCadastro">Cadastrar?</a>                                                                                                            
+                                    </div>                             
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+
+            <!--Modal referente a tela de CadastroLogin-->
+            <div class="container">
+                <div class="modal fade" id="modalCadastro" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalCadastro" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content bg-light-gray">
+                            <div class="modal-header">                            
+                                <button type="button" title="Fechar" data-toggle="tooltip" data-placement="bottom" class="btn btn-default text-muted pull-right" data-dismiss="modal">x</button>
+                                <h4 class="modal-title" id="ModalLabelCadastro">Cadastre-se</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h:form>
+                                    <p:panel rendered="#{usuarioBean.verificaDadosCadastro()}" style="border: 0" class="bg-light-gray">                                    
+                                        <div class="alert alert-danger">
+                                            <a href="#" class="close" data-dismiss="alert">x</a>
+                                            <strong>Erro!</strong> Preencha todos os campos, tente novamente.
+                                        </div>
+                                    </p:panel> 
+
+                                    <p:outputLabel value="Usuário:" class="text-muted"/>                           
+                                    <p:inputText type="text" value="#{usuarioBean.usuario.usu_Nome}" class="form-control text-muted" placeholder="Usuário"/>
+                                    <p class="help-block text-danger"></p>
+                                    <p:outputLabel value="E-mail:" class="text-muted"/>                           
+                                    <p:inputText type="email" value="#{usuarioBean.usuario.usu_Email}" class="form-control" placeholder="E-mail"/>
+                                    <p class="help-block text-danger"></p>
+                                    <p:outputLabel value="Senha:"  class="text-muted"/>                                                           
+                                    <p:password id="feedbackCadLogin" inline="true" promptLabel="Por favor, preencha o campo senha" maxlength="8" value="#{usuarioBean.usuario.usu_Senha}" 
+                                                feedback="true" class="form-control" placeholder="Senha" weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte"/>                                
+                                    <p class="help-block text-danger"></p>
+                                    <div class="modal-footer">                                                                                                
+                                        <h:commandButton title="Cadastrar-se no sistema" id="btnCadastrar" value="Cadastrar" class="btn btn-primary text-muted" 
+                                                         actionListener="#{usuarioBean.cadastroDeUsuario()}">                                         
+                                            <f:passThroughAttribute name="data-toggle" value="tooltip" />
+                                            <f:passThroughAttribute name="data-placement" value="left" />
+                                        </h:commandButton>
+                                    </div> 
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <!--Modais fim-->
+
+            <!--LOGIN E LOGOUT COM O FBook-->
+            <script>
+
+                window.fbAsyncInit = function () {
+                    FB.init({
+                        appId: '474099922738511', // App ID
+                        //    channelUrl : '://sudiproy89-fb-login-mooc.herokuapp.com/channel.html', // Channel File
+                        status: true, // check login status
+                        cookie: true, // enable cookies to allow the server to access the session
+                        xfbml: true  // parse XFBML
+                    });
+                    // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
+                    // for any authentication related change, such as login, logout or session refresh. This means that
+                    // whenever someone who was previously logged out tries to log in again, the correct case below 
+                    // will be handled. 
+                    FB.Event.subscribe('auth.authResponseChange', function (response) {
+                        // Here we specify what we doB with the response anytime this event occurs. 
+                        if (response.status === 'connected') {
+                            // The response object is returned with a status field that lets the app know the current
+                            // login status of the person. In this case, we're handling the situation where they 
+                            // have logged in to the app.
+                            testAPI();
+                        } else if (response.status === 'not_authorized') {
+                            // In this case, the person is logged into Facebook, but not into the app, so we call
+                            // FB.login() to prompt them to do so. 
+                            // In real-life usage, you wouldn't want to immediately prompt someone to login 
+                            // like this, for two reasons:
+                            // (1) JavaScript created popup windows are blocked by most browsers unless they 
+                            // result from direct interaction from people using the app (such as a mouse click)
+                            // (2) it is a bad experience to be continually prompted to login upon page load.
+                            FB.login();
+                        } else {
+                            // In this case, the person is not logged into Facebook, so we call the login() 
+                            // function to prompt them to do so. Note that at this stage there is no indication
+                            // of whether they are logged into the app. If they aren't then they'll see the Login
+                            // dialog right after they log in to Facebook. 
+                            // The same caveats as above apply to the FB.login() call here.
+                            FB.login();
+                        }
+                    });
+                };
+                // Load the SDK asynchronously
+                (function (d) {
+                    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+                    js = d.createElement('script');
+                    js.id = id;
+                    js.async = true;
+                    js.src = "//connect.facebook.net/en_US/all.js";
+                    ref.parentNode.insertBefore(js, ref);
+                }(document));
+                // Here we run a very simple test of the Graph API after login is successful. 
+                // This testAPI() function is only called in those cases. 
+                function testAPI() {
+                    console.log('Welcome!  Fetching your information.... ');
+                    FB.api('/me', function (response) {
+
+//pegando os dados do perfil do user
+                        var userIDFace = response.id;
+                        var userNameFace = response.name;
+                        document.getElementById("idFace").value = userIDFace;
+                        document.getElementById("userNameFace").value = userNameFace;
+                        console.log('Good to see you, ' + response.id + '.');
+                    });
+                }
+
+                function logout() {
+                    FB.logout(function (response) {
+                        // user is now logged out
+                    });
+                }
+            </script>
+
+            <!--LOGIN E LOGOUT COM O GOOGLE-->
+            <script>
+                function onSignIn(response) {
+                    // Conseguindo as informações do seu usuário:
+                    var perfil = response.getBasicProfile();
+
+                    // Conseguindo o ID do Usuário
+                    var userID = perfil.getId();
+
+                    // Conseguindo o Nome do Usuário
+                    var userName = perfil.getName();
+
+                    // Conseguindo o E-mail do Usuário
+                    //                var userEmail = perfil.getEmail();
+
+                    // Conseguindo a URL da Foto do Perfil
+                    //                var userPicture = perfil.getImageUrl();
+
+                    //                document.getElementById('user-photo').src = userPicture;
+                    //                document.getElementById('user-name').innerText = userName;
+                    //                document.getElementById('user-email').innerText = userEmail;
+
+                    document.getElementById("idGoogle").value = userID;
+                    document.getElementById("userNameGoogle").value = userName;
+
+                    // Recebendo o TOKEN que você usará nas demais requisições à API:
+                    var LoR = response.getAuthResponse().id_token;
+                    console.log("~ le Tolkien: " + LoR);
+                }
+                ;
+
+                function signOut() {
+                    console.log(document);
+                    var auth2 = gapi.auth2.getAuthInstance();
+                    auth2.signOut().then(function () {
+                        console.log('User signed out.');
+                    });
+                }
+
+            </script>
+
+            <!-- Script para abrir Modal automaticamente quando há erro de login -->
+            <script type="text/javascript">
+                if (#{usuarioBean.verificaDadosLogin()}) {
+                    $(window).load(function () {
+                        $('#modalLoginTDefault').modal('show');
+                    });
+                #{usuarioBean.limpaErroLogin()};
+                }
+            </script>
+            <!-- Script para abrir Modal automaticamente quando há erro de cadastroLogin -->
+            <script type="text/javascript">
+                if (#{usuarioBean.verificaDadosCadastro()}) {
+                    $(window).load(function () {
+                        $('#modalCadastro').modal('show');
+                    });
+                #{usuarioBean.limpaErroCad()};
+                }
+            </script>
+
+            <!--scripts para usar o tooltip-->        
+            <script type="text/javascript">
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip()
+                })
+            </script>
+
+
+            <!--scripts para abrir o modal-->        
+            <script type="text/javascript">
+                function FuncaoAbreModalLoginTDefault() {
+                    $('#modalLoginTDefault').modal('show');
+                }
+                ;
+            </script>
+        </ui:insert>
+        <ui:insert name="content"></ui:insert>
+        <!--<h:outputScript name="./js/jquery-1.11.2.min.js"/>-->
+        <h:outputScript name="./js/bootstrap.min.js"/>
+    </h:body>
+</html>

@@ -1,0 +1,11 @@
+.panel-responsive {
+    max-width: 100%;
+    padding: 0px; 
+    text-align: center; 
+    margin:0 auto;    
+  }
+      
+/* .ui-widget-header{
+	color:#ffffff !important;
+        background:#000000 !important;
+}*/
